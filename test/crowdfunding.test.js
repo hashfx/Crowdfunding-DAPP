@@ -1,8 +1,8 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
-const etherToWei = (n) =>{
-  return ethers.utils.parseUnits(n,'ether')
+const etherToWei = (n) => {
+  return ethers.utils.parseUnits(n, 'ether')
 }
 
 const dateToUNIX = (date) => {
@@ -11,12 +11,12 @@ const dateToUNIX = (date) => {
 
 describe("Crowdfunding", () => {
 
-  var address1; 
-  var address2; 
+  var address1;
+  var address2;
   var crowdfundingContract;
 
   beforeEach(async function () {
-    [address1, address2,  ...address] = await ethers.getSigners();
+    [address1, address2, ...address] = await ethers.getSigners();
 
     const Crowdfunding = await ethers.getContractFactory("Crowdfunding");
     crowdfundingContract = await Crowdfunding.deploy();
@@ -26,13 +26,13 @@ describe("Crowdfunding", () => {
   describe("Request for funding", async function () {
     it("Start a project", async function () {
 
-      const minimumContribution=etherToWei('1');
-      const deadline=dateToUNIX('2023-12-31');
-      const targetContribution=etherToWei('100');
-      const projectTitle='Testing title';
-      const projectDesc='Testing description';
+      const minimumContribution = etherToWei('1');
+      const deadline = dateToUNIX('2023-12-31');
+      const targetContribution = etherToWei('100');
+      const projectTitle = 'Testing title';
+      const projectDesc = 'Testing description';
 
-      const project = await crowdfundingContract.connect(address1).createProject(minimumContribution,deadline,targetContribution,projectTitle,projectDesc)
+      const project = await crowdfundingContract.connect(address1).createProject(minimumContribution, deadline, targetContribution, projectTitle, projectDesc)
       const event = await project.wait();
 
       const projectList = await crowdfundingContract.returnAllProjects();
@@ -55,16 +55,16 @@ describe("Crowdfunding", () => {
 
     it("Get data", async function () {
 
-      const minimumContribution=etherToWei('1');
-      const deadline=dateToUNIX('2023-12-31');
-      const targetContribution=etherToWei('100');
-      const projectTitle='Testing title';
-      const projectDesc='Testing description';
+      const minimumContribution = etherToWei('1');
+      const deadline = dateToUNIX('2023-12-31');
+      const targetContribution = etherToWei('100');
+      const projectTitle = 'Testing title';
+      const projectDesc = 'Testing description';
 
-      await crowdfundingContract.connect(address1).createProject(minimumContribution,deadline,targetContribution,projectTitle,projectDesc)
+      await crowdfundingContract.connect(address1).createProject(minimumContribution, deadline, targetContribution, projectTitle, projectDesc)
       const projectList = await crowdfundingContract.returnAllProjects();
-      const contribute = await crowdfundingContract.connect(address1).contribute(projectList[0],{value: etherToWei("4")});
-      
+      const contribute = await crowdfundingContract.connect(address1).contribute(projectList[0], { value: etherToWei("4") });
+
       const event = await contribute.wait();
       // Test ContributionReceived event
       expect(event.events.length).to.equal(2);
