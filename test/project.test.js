@@ -73,7 +73,7 @@ describe("Project", () => {
 
   describe("Create withdraw request", async function () {
     it("Should fail if someone else try to request (Only owner can make request) ", async () => {
-      await expect(projectContract.connect(address2).createWithdrawRequest("Testing description", etherToWei('2'), address2.address)).to.be.revertedWith('You dont have access to perform this operation !');
+      await expect(projectContract.connect(address2).createWithdrawRequest("Testing description", etherToWei('2'), address2.address)).to.be.revertedWith('You do not have access to perform this operation!');
     })
 
     it("Withdraw request Should fail if status not equal to Successful ", async () => {
@@ -99,10 +99,10 @@ describe("Project", () => {
 
   describe("Vote for withdraw request", async function () {
 
-    it("Only contributor can vote ", async () => {
+    it("Only contributor can vote", async () => {
       await projectContract.contribute(address1.address, { value: etherToWei('12') });
       await projectContract.connect(address1).createWithdrawRequest("Testing description", etherToWei('2'), address1.address)
-      await expect(projectContract.connect(address2).voteWithdrawRequest(0)).to.be.revertedWith('Only contributor can vote !');
+      await expect(projectContract.connect(address2).voteWithdrawRequest(0)).to.be.revertedWith('Only contributor can vote!');
     })
 
     it("Vote withdraw request", async () => {
@@ -128,13 +128,13 @@ describe("Project", () => {
       await projectContract.connect(address1).createWithdrawRequest("Testing description", etherToWei('2'), address1.address)
       await projectContract.connect(address2).voteWithdrawRequest(0)
 
-      await expect(projectContract.connect(address2).voteWithdrawRequest(0)).to.be.revertedWith('You already voted !');
+      await expect(projectContract.connect(address2).voteWithdrawRequest(0)).to.be.revertedWith('You already voted!');
     })
 
   })
 
   describe("Withdraw balance", async function () {
-    it("Should fail if 50% contributor need to voted", async () => {
+    it("Should fail if <50% vote", async () => {
       await projectContract.contribute(address1.address, { value: etherToWei('6') });
       await projectContract.contribute(address2.address, { value: etherToWei('7') });
 
