@@ -8,7 +8,7 @@ const crowdFundingContractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
 
 //Load web3 
 export const loadWeb3 = async (dispatch) => {
-  const web3 = new Web3(Web3.givenProvider || "https://8545-hashfx-crowdfundingdapp-acem9o9hh2e.ws-us106.gitpod.io");
+  const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
   dispatch(actions.web3Loaded(web3));
   return web3;
 };
