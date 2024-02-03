@@ -4,7 +4,7 @@ import CrowdFunding from '../artifacts/contracts/Crowdfunding.sol/Crowdfunding.j
 import Project from '../artifacts/contracts/Project.sol/Project.json'
 import { groupContributionByProject, groupContributors, projectDataFormatter, withdrawRequestDataFormatter} from "../helper/helper";
 
-const crowdFundingContractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+const crowdFundingContractAddress = "0x2B80f12A996691A23C63c25DAD51CcF45582b292";
 
 //Load web3 
 export const loadWeb3 = async (dispatch) => {
